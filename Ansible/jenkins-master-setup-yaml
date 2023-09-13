@@ -1,0 +1,35 @@
+---
+
+- hosts: jenkins-master # I want to execute this playbook on the jenkins master
+  become: true # We are doing installtion, for that we need to become root. this statement helps us become root
+  tasks: # we are going to execute task
+
+  - name: add jenkins key
+    apt_key:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    state: present
+
+  - name: add jenkins repo
+    apt_repository:
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/' # put it in a single quote because its more than one value.
+    state: present
+
+  - name: install java
+    apt:
+    name: openjdk-11-jre
+    state: present
+
+  - name: install jenkins
+    apt:
+    name: jenkins
+    state: present
+
+  - name: start jenkins service
+    service:
+    name: jenkins
+    state: started
+
+  - name: enable jenkins to start at boot time
+    service:
+    name: jenkins
+    enabled: yes
