@@ -1,8 +1,8 @@
 ---
 
-- hosts: jenkins-master # I want to execute this playbook on the jenkins master
-  become: true # We are doing installtion, for that we need to become root. this statement helps us become root
-  tasks: # we are going to execute task
+- hosts: jenkins-master
+  become: true
+  tasks:
 
   - name: add jenkins key
     apt_key:
@@ -11,7 +11,7 @@
 
   - name: add jenkins repo
     apt_repository:
-    repo: 'deb https://pkg.jenkins.io/debian-stable binary/' # put it in a single quote because its more than one value.
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
     state: present
 
   - name: install java
